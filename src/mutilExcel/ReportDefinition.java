@@ -1,7 +1,7 @@
 package mutilExcel;
 
+
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -147,7 +147,7 @@ public class ReportDefinition {
 
     private int defaultColumnWidth = 3000;
 
-    private int minColumnWidth = 238;
+    private int minColumnWidth = 2000;
 
     private boolean printable = false;
 
@@ -189,6 +189,17 @@ public class ReportDefinition {
         } else {
             System.out.println("row is null...");
         }
+    }
+
+    public void setCellForegroundColor(int rowIndex, int colIndex, int colorIndex) {
+        CellStyle style = generateCellStyle();
+        style.setFillPattern((short)1);
+        style.setFillForegroundColor((short)colorIndex);
+        style.setBorderTop((short)1);
+        style.setBorderBottom((short)1);
+        style.setBorderLeft((short)1);
+        style.setBorderRight((short)1);
+        setCellStyle(rowIndex, colIndex, style);
     }
 
     public void setBottomLine(int rowIndex, int colIndex, short linewidth) {
@@ -234,7 +245,16 @@ public class ReportDefinition {
 
     public ReportDefinition() {
         this.workbook = new SXSSFWorkbook();
+        CreateSheet();
+    }
+
+    public void CreateSheet() {
         this.sheet = this.workbook.createSheet(this.sheetName);
+    }
+
+    public void CreateSheet(String sheetName) {
+        this.sheet = this.workbook.createSheet(sheetName);
+        this.sheetName = sheetName;
     }
 
     private void prepareStyles() {
@@ -242,7 +262,9 @@ public class ReportDefinition {
         headerFont.setBoldweight((short)700);
         headerFont.setFontHeightInPoints((short)10);
         headerFont.setFontName("Aria");
-
+        Font dataFont = this.workbook.createFont();
+        dataFont.setFontHeightInPoints((short)10);
+        dataFont.setFontName("Aria");
         this.headerStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.headerStyle.setBorderLeft((short)1);
@@ -250,33 +272,25 @@ public class ReportDefinition {
             this.headerStyle.setBorderTop((short)1);
             this.headerStyle.setBorderBottom((short)1);
         }
-        this.headerStyle.setFillBackgroundColor((short)49);
-        this.headerStyle.setFillForegroundColor((short)12);
+        this.headerStyle.setFillPattern((short)1);
+        this.headerStyle.setFillForegroundColor((short)52);
+        this.headerStyle.setFont(headerFont);
         this.headerStyle.setVerticalAlignment((short)1);
         this.headerStyle.setAlignment((short)2);
-        this.headerStyle.setFont(headerFont);
         this.headerStyle.setWrapText(true);
 
         this.headerStyleColor = this.workbook.createCellStyle();
         this.headerStyleColor.setFillPattern((short)1);
         this.headerStyleColor.setFillForegroundColor((short)this.cellColor);
-        this.headerStyleColor.setFillBackgroundColor((short)10);
         if (!this.printable) {
             this.headerStyleColor.setBorderLeft((short)1);
             this.headerStyleColor.setBorderRight((short)1);
             this.headerStyleColor.setBorderTop((short)1);
             this.headerStyleColor.setBorderBottom((short)1);
         }
-
         this.headerStyleColor.setVerticalAlignment((short)1);
         this.headerStyleColor.setAlignment((short)2);
-        this.headerStyleColor.setFont(headerFont);
         this.headerStyleColor.setWrapText(true);
-
-
-        Font dataFont = this.workbook.createFont();
-        dataFont.setFontHeightInPoints((short)10);
-        dataFont.setFontName("Aria");
 
         this.cellStyle = this.workbook.createCellStyle();
         if (!this.printable) {
@@ -288,7 +302,6 @@ public class ReportDefinition {
         this.cellStyle.setVerticalAlignment((short)1);
         this.cellStyle.setAlignment((short)2);
         this.cellStyle.setFont(dataFont);
-
         this.cellStyleColor = this.workbook.createCellStyle();
         this.cellStyleColor.setFillPattern((short)1);
         this.cellStyleColor.setFillForegroundColor((short)this.cellColor);
@@ -301,7 +314,6 @@ public class ReportDefinition {
         this.cellStyleColor.setVerticalAlignment((short)1);
         this.cellStyleColor.setAlignment((short)2);
         this.cellStyleColor.setFont(dataFont);
-
         this.propertyStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.propertyStyle.setBorderLeft((short)1);
@@ -346,7 +358,6 @@ public class ReportDefinition {
         this.stringCellStyleColor.setVerticalAlignment((short)1);
         this.stringCellStyleColor.setAlignment((short)1);
         this.stringCellStyleColor.setFont(dataFont);
-
         this.longStringCellStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.longStringCellStyle.setBorderLeft((short)1);
@@ -371,7 +382,6 @@ public class ReportDefinition {
         this.longStringCellStyleColor.setAlignment((short)1);
         this.longStringCellStyleColor.setWrapText(true);
         this.longStringCellStyleColor.setFont(dataFont);
-
         this.numberCellStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.numberCellStyle.setBorderLeft((short)1);
@@ -394,7 +404,6 @@ public class ReportDefinition {
         this.numberCellStyleColor.setVerticalAlignment((short)1);
         this.numberCellStyleColor.setAlignment((short)3);
         this.numberCellStyleColor.setFont(dataFont);
-
         DataFormat format = this.workbook.createDataFormat();
         this.dateCellStyle = this.workbook.createCellStyle();
         this.dateCellStyle.setDataFormat(format.getFormat("yyyy-MM-dd"));
@@ -420,9 +429,8 @@ public class ReportDefinition {
         this.dateCellStyleColor.setVerticalAlignment((short)1);
         this.dateCellStyleColor.setAlignment((short)3);
         this.dateCellStyleColor.setFont(dataFont);
-
-        this.currencyStyle = this.workbook.createCellStyle();
         DataFormat currencyformat = this.workbook.createDataFormat();
+        this.currencyStyle = this.workbook.createCellStyle();
         this.currencyStyle.setDataFormat(currencyformat.getFormat("#,##0.00"));
         if (!this.printable) {
             this.currencyStyle.setBorderLeft((short)1);
@@ -446,7 +454,6 @@ public class ReportDefinition {
         this.currencyStyleColor.setVerticalAlignment((short)1);
         this.currencyStyleColor.setAlignment((short)3);
         this.currencyStyleColor.setFont(dataFont);
-
         this.wrapStyle = this.workbook.createCellStyle();
         this.wrapStyle.setWrapText(true);
         this.wrapStyle.setFont(dataFont);
@@ -455,9 +462,8 @@ public class ReportDefinition {
         this.wrapStyleColor.setFillForegroundColor((short)this.cellColor);
         this.wrapStyleColor.setWrapText(true);
         this.wrapStyleColor.setFont(dataFont);
-
-        this.percentageStyle = this.workbook.createCellStyle();
         DataFormat percentageFormat = this.workbook.createDataFormat();
+        this.percentageStyle = this.workbook.createCellStyle();
         this.percentageStyle.setDataFormat(percentageFormat.getFormat("0.00%"));
         if (!this.printable) {
             this.percentageStyle.setBorderLeft((short)1);
@@ -481,7 +487,6 @@ public class ReportDefinition {
         this.percentageStyleColor.setVerticalAlignment((short)1);
         this.percentageStyleColor.setAlignment((short)3);
         this.percentageStyleColor.setFont(dataFont);
-
         this.styles.put(HEADER_STYLE, this.headerStyle);
         this.styles.put(HEADER_STYLE_COLOR, this.headerStyleColor);
         this.styles.put(PROPERTY_STYLE, this.propertyStyle);
@@ -529,7 +534,7 @@ public class ReportDefinition {
 
     public void mergeCells(int firstRow, int lastRow, int firstCol, int lastCol) {
         CellRangeAddress address = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
-        this.workbook.getSheet(this.sheetName).addMergedRegion(address);
+        this.sheet.addMergedRegion(address);
     }
 
     public String getCellValue(int rowIndex, int colIndex) {
@@ -638,11 +643,13 @@ public class ReportDefinition {
         } else {
             this.sheet.setColumnWidth(1, (int)(length2 * 1.1D));
         }
+
         if (merge)
             mergeCells(rownumber, rownumber, 0, 1);
     }
 
     public void prepareExcel() {
+        this.prepared = false;
         if (!this.prepared) {
             prepareStyles();
             int rowNumber = 0;
@@ -662,10 +669,22 @@ public class ReportDefinition {
                 Row row = this.sheet.createRow(rowNumber++);
                 for (int i = 0; i < ((ReportRow)this.headers.get(h)).size(); i++) {
                     Cell cellHeader = row.createCell(i);
+//                    cellHeader.setCellStyle(this.headerStyle);
                     cellHeader.setCellStyle(this.styles.get(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellStyleName()));
                     cellHeader.setCellType(1);
                     cellHeader.setCellValue(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellContent());
                     this.titleEndColIndex = i;
+                    if (i>1){
+                        this.sheet.autoSizeColumn(i, true);
+                        int headerColumnWidth = ((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellContent().length()*2*256;
+                        this.sheet.setColumnWidth(i,headerColumnWidth);
+                        System.out.println(i + " ----set ->" + headerColumnWidth);
+                        if (headerColumnWidth <= this.minColumnWidth) {
+                        this.sheet.setColumnWidth(i, this.defaultColumnWidth);
+                            System.out.println(i + " -- set defaultColumnWidth ->" + this.sheet.getColumnWidth(i));
+                        }
+                    }
+
                 }
             }
             this.titleEndRowIndex = rowNumber - 1;
@@ -735,6 +754,7 @@ public class ReportDefinition {
     }
 
     public void prepareExcelEng() {
+        this.prepared = false;
         if (!this.prepared) {
             prepareStyles();
             int rowNumber = 0;
@@ -754,6 +774,7 @@ public class ReportDefinition {
                 Row row = this.sheet.createRow(rowNumber++);
                 for (int i = 0; i < ((ReportRow)this.headers.get(h)).size(); i++) {
                     Cell cellHeader = row.createCell(i);
+//                    cellHeader.setCellStyle(this.headerStyle);
                     cellHeader.setCellStyle(this.styles.get(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellStyleName()));
                     cellHeader.setCellType(1);
                     cellHeader.setCellValue(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellContent());
@@ -828,13 +849,10 @@ public class ReportDefinition {
                 for (int i = 0; i < ((ReportRow)this.headers.get(0)).size(); i++) {
                     this.sheet.autoSizeColumn(i, true);
                     int columnWidth = this.sheet.getColumnWidth(i);
-                    int headerColumnWidth = (this.headers.get(0).getCells().get(i)).getCellContent().length()*2*256;
-                    this.sheet.setColumnWidth(i,headerColumnWidth);
-//                    this.sheet.setColumnWidth(i,columnWidth);
-//                    System.out.println("col:" + i + "->" + columnWidth +"--" +(this.headers.get(0).getCells().get(i)).getCellContent().length()*2*256);
+//                    int headerColumnWidth = (this.headers.get(0).getCells().get(i)).getCellContent().length()*2*256;
+//                    this.sheet.setColumnWidth(i,headerColumnWidth);
                     if (columnWidth <= this.minColumnWidth) {
                         this.sheet.setColumnWidth(i, this.defaultColumnWidth);
-                        System.out.println(i + " set ->" + this.sheet.getColumnWidth(i));
                     }
                 }
             FileOutputStream fOut = new FileOutputStream(filePath);
@@ -854,11 +872,8 @@ public class ReportDefinition {
                 for (int i = 0; i < ((ReportRow)this.headers.get(0)).size(); i++) {
                     this.sheet.autoSizeColumn(i, true);
                     int columnWidth = this.sheet.getColumnWidth(i);
-                    System.out.println("" + i + "->" + columnWidth);
-                    if (columnWidth <= this.minColumnWidth) {
+                    if (columnWidth <= this.minColumnWidth)
                         this.sheet.setColumnWidth(i, this.defaultColumnWidth);
-                        System.out.println(i + " set ->" + this.sheet.getColumnWidth(i));
-                    }
                 }
             FileOutputStream fOut = new FileOutputStream(filePath);
             this.workbook.write(fOut);
@@ -873,7 +888,24 @@ public class ReportDefinition {
         try {
             if (!this.prepared)
                 prepareExcel();
-            engSheet(filePath, arrColumnIndex, arrColumnWidth);
+            if (this.sheet != null)
+                for (int i = 0; i < ((ReportRow)this.headers.get(0)).size(); i++) {
+                    this.sheet.autoSizeColumn(i, true);
+                    System.out.println(i + " default ->" + this.sheet.getColumnWidth(i));
+                    int columnWidth = this.sheet.getColumnWidth(i);
+                    if (columnWidth == 238) {
+                        int columnIndex = -1;
+                        columnIndex = Arrays.<Object>asList(arrColumnIndex).indexOf(Integer.valueOf(i));
+                        if (columnIndex >= 0) {
+                            this.sheet.setColumnWidth(i, ((Integer)arrColumnWidth[columnIndex]).intValue());
+                            System.out.println(i + " set ->" + this.sheet.getColumnWidth(i));
+                        }
+                    }
+                }
+            FileOutputStream fOut = new FileOutputStream(filePath);
+            this.workbook.write(fOut);
+            fOut.flush();
+            fOut.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -883,31 +915,27 @@ public class ReportDefinition {
         try {
             if (!this.prepared)
                 prepareExcelEng();
-            engSheet(filePath, arrColumnIndex, arrColumnWidth);
+            if (this.sheet != null)
+                for (int i = 0; i < ((ReportRow)this.headers.get(0)).size(); i++) {
+                    this.sheet.autoSizeColumn(i, true);
+                    System.out.println(i + " default ->" + this.sheet.getColumnWidth(i));
+                    int columnWidth = this.sheet.getColumnWidth(i);
+                    if (columnWidth == 238) {
+                        int columnIndex = -1;
+                        columnIndex = Arrays.<Object>asList(arrColumnIndex).indexOf(Integer.valueOf(i));
+                        if (columnIndex >= 0) {
+                            this.sheet.setColumnWidth(i, ((Integer)arrColumnWidth[columnIndex]).intValue());
+                            System.out.println(i + " set ->" + this.sheet.getColumnWidth(i));
+                        }
+                    }
+                }
+            FileOutputStream fOut = new FileOutputStream(filePath);
+            this.workbook.write(fOut);
+            fOut.flush();
+            fOut.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void engSheet(String filePath, Object[] arrColumnIndex, Object[] arrColumnWidth) throws IOException {
-        if (this.sheet != null)
-            for (int i = 0; i < ((ReportRow)this.headers.get(0)).size(); i++) {
-                this.sheet.autoSizeColumn(i, true);
-                System.out.println(i + " default ->" + this.sheet.getColumnWidth(i));
-                int columnWidth = this.sheet.getColumnWidth(i);
-                if (columnWidth == 238) {
-                    int columnIndex = -1;
-                    columnIndex = Arrays.<Object>asList(arrColumnIndex).indexOf(Integer.valueOf(i));
-                    if (columnIndex >= 0) {
-                        this.sheet.setColumnWidth(i, ((Integer)arrColumnWidth[columnIndex]).intValue());
-                        System.out.println(i + " set ->" + this.sheet.getColumnWidth(i));
-                    }
-                }
-            }
-        FileOutputStream fOut = new FileOutputStream(filePath);
-        this.workbook.write(fOut);
-        fOut.flush();
-        fOut.close();
     }
 
     public void setFooter(int fontSize, String footerStr) {
@@ -1019,9 +1047,13 @@ public class ReportDefinition {
         this.headerRowIndex = headerRowIndex;
     }
 
-    public int getCellColor() { return this.cellColor;}
+    public int getCellColor() {
+        return this.cellColor;
+    }
 
-    public void setCellColor(int cellColor) { this.cellColor = cellColor;}
+    public void setCellColor(int cellColor) {
+        this.cellColor = cellColor;
+    }
 
     public void setColumnWidth(int columnIndex, int width) {
         try {
@@ -1047,6 +1079,21 @@ public class ReportDefinition {
 
     public void setSheet(Sheet sheet) {
         this.sheet = sheet;
+        this.headers = new ArrayList<>();
+        this.rows = new ArrayList<>();
+    }
+
+    public void setActiveSheet() {
+        setSheet(this.workbook.getSheetAt(this.workbook.getActiveSheetIndex()));
+    }
+
+    public void setActiveSheetAt(int sheetIndex) {
+        this.workbook.setActiveSheet(sheetIndex);
+    }
+
+    public void renameSheet(int sheetIndex, String sheetName) {
+        this.workbook.setSheetName(sheetIndex, sheetName);
+        setSheetName(sheetName);
     }
 
     public void hideRow(int rowIndex) {

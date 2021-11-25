@@ -1013,6 +1013,19 @@ public class ReportDefinitionX {
         this.sheet = sheet;
     }
 
+    public void setActiveSheet() {
+        setSheet(this.workbook.getSheetAt(this.workbook.getActiveSheetIndex()));
+    }
+
+    public void setActiveSheetAt(int sheetIndex) {
+        this.workbook.setActiveSheet(sheetIndex);
+    }
+
+    public void renameSheet(int sheetIndex, String sheetName) {
+        this.workbook.setSheetName(sheetIndex, sheetName);
+        setSheetName(sheetName);
+    }
+
     public void hideRow(int rowIndex) {
         if (!this.prepared)
             prepareExcel();
