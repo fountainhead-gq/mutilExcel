@@ -28,9 +28,24 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addHeaderCellColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.HEADER_STYLE_COLOR);
+        rc.setRow(this);
+        rc.setColumnWidth(this.cellWidth);
+        this.cells.add(rc);
+    }
+
     public void addLongString(String cell) {
         ReportCellX rc = new ReportCellX(cell, 0);
         rc.setCellStyleName(ReportDefinitionX.LONG_STRING_STYLE);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
+    public void addLongStringColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.LONG_STRING_STYLE_COLOR);
         rc.setRow(this);
         this.cells.add(rc);
     }
@@ -42,9 +57,23 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addStringColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
     public void addNumber(String cell) {
         ReportCellX rc = new ReportCellX(cell, 1);
         rc.setCellStyleName(ReportDefinitionX.NUMBER_STYLE);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
+    public void addNumberColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 1);
+        rc.setCellStyleName(ReportDefinitionX.NUMBER_STYLE_COLOR);
         rc.setRow(this);
         this.cells.add(rc);
     }
@@ -56,13 +85,37 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addDateColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 2);
+        rc.setCellStyleName(ReportDefinitionX.DATE_STYLE_COLOR);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
     public void addCell(String cell) {
         addString(cell);
+    }
+
+    public void addCellColor(String cell) {
+//        addStringColor(cell);
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.CELL_STYLE_COLOR);
+        rc.setRow(this);
+        rc.setColumnWidth(this.cellWidth);
+        this.cells.add(rc);
     }
 
     public void addCellWidth(String cell, int width) {
         ReportCellX rc = new ReportCellX(cell, 0);
         rc.setCellStyleName(ReportDefinitionX.STRING_STYLE);
+        rc.setRow(this);
+        rc.setColumnWidth(width);
+        this.cells.add(rc);
+    }
+
+    public void addCellWidthColor(String cell, int width) {
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
         rc.setRow(this);
         rc.setColumnWidth(width);
         this.cells.add(rc);
@@ -76,9 +129,24 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addBoldStringColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
+        rc.setBold(true);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
     public void addCurrencyNumber(String cell) {
         ReportCellX rc = new ReportCellX(cell, 1);
         rc.setCellStyleName(ReportDefinitionX.CURRENCY_STYLE);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
+    public void addCurrencyNumberColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 1);
+        rc.setCellStyleName(ReportDefinitionX.CURRENCY_STYLE_COLOR);
         rc.setRow(this);
         this.cells.add(rc);
     }
@@ -91,9 +159,24 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addBoldCurrencyNumberColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 1);
+        rc.setCellStyleName(ReportDefinitionX.CURRENCY_STYLE_COLOR);
+        rc.setBold(true);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
     public void addPercentNumber(String cell) {
         ReportCellX rc = new ReportCellX(cell, 1);
         rc.setCellStyleName(ReportDefinitionX.PERCENTAGE_STYLE);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
+    public void addPercentNumberColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 1);
+        rc.setCellStyleName(ReportDefinitionX.PERCENTAGE_STYLE_COLOR);
         rc.setRow(this);
         this.cells.add(rc);
     }
@@ -106,9 +189,25 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addBoldDateColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 2);
+        rc.setCellStyleName(ReportDefinitionX.DATE_STYLE_COLOR);
+        rc.setBold(true);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
     public void addBoldNumber(String cell) {
         ReportCellX rc = new ReportCellX(cell, 1);
         rc.setCellStyleName(ReportDefinitionX.NUMBER_STYLE);
+        rc.setBold(true);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
+    public void addBoldNumberColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 1);
+        rc.setCellStyleName(ReportDefinitionX.NUMBER_STYLE_COLOR);
         rc.setBold(true);
         rc.setRow(this);
         this.cells.add(rc);
@@ -123,6 +222,15 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addNoborderBoldTextColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
+        rc.setBold(true);
+        rc.setNoBorder(true);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
     public void addNoborderText(String cell) {
         ReportCellX rc = new ReportCellX(cell, 0);
         rc.setCellStyleName(ReportDefinitionX.STRING_STYLE);
@@ -131,9 +239,31 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addNoborderTextColor(String cell) {
+        ReportCellX rc = new ReportCellX(cell, 0);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
+        rc.setNoBorder(true);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
     public void addCustomCell(String cell, boolean isBold, int hAlign, int vAlign, int borderWidth, boolean hasBorder, int fontSize) {
         ReportCellX rc = new ReportCellX(cell, 3);
         rc.setCellStyleName(ReportDefinitionX.STRING_STYLE);
+        rc.setCellContent(cell);
+        rc.setBold(isBold);
+        rc.setHAlign(hAlign);
+        rc.setVAlign(vAlign);
+        rc.setBorderWidth(borderWidth);
+        rc.setHasBorders(hasBorder);
+        rc.setFontSize(fontSize);
+        rc.setRow(this);
+        this.cells.add(rc);
+    }
+
+    public void addCustomCellColor(String cell, boolean isBold, int hAlign, int vAlign, int borderWidth, boolean hasBorder, int fontSize) {
+        ReportCellX rc = new ReportCellX(cell, 3);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
         rc.setCellContent(cell);
         rc.setBold(isBold);
         rc.setHAlign(hAlign);
@@ -158,9 +288,26 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void sumColumnColor(int colIndex, int startRow, int endRow, boolean currencyFormat) {
+        String columnName = ColumnName(colIndex);
+        String formula = "SUM(" + columnName + (startRow + 1) + ":" + columnName + (endRow + 1) + ")";
+        ReportCellX rc = new ReportCellX(formula, -1);
+        if (currencyFormat) {
+            rc.setCellStyleName(ReportDefinitionX.CURRENCY_STYLE_COLOR);
+        } else {
+            rc.setCellStyleName(ReportDefinitionX.NUMBER_STYLE_COLOR);
+        }
+        this.cells.add(rc);
+    }
+
     public void sumAbove(int startRow, int endRow, boolean currencyFormat) {
         int colIndex = this.cells.size() + 1;
         sumColumn(colIndex, startRow, endRow, currencyFormat);
+    }
+
+    public void sumAboveColor(int startRow, int endRow, boolean currencyFormat) {
+        int colIndex = this.cells.size() + 1;
+        sumColumnColor(colIndex, startRow, endRow, currencyFormat);
     }
 
     public void addFormulaNumber(String formula) {
@@ -169,9 +316,21 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addFormulaNumberColor(String formula) {
+        ReportCellX rc = new ReportCellX(formula, -1);
+        rc.setCellStyleName(ReportDefinitionX.NUMBER_STYLE_COLOR);
+        this.cells.add(rc);
+    }
+
     public void addFormulaPercent(String formula) {
         ReportCellX rc = new ReportCellX(formula, -1);
         rc.setCellStyleName(ReportDefinitionX.PERCENTAGE_STYLE);
+        this.cells.add(rc);
+    }
+
+    public void addFormulaPercentColor(String formula) {
+        ReportCellX rc = new ReportCellX(formula, -1);
+        rc.setCellStyleName(ReportDefinitionX.PERCENTAGE_STYLE_COLOR);
         this.cells.add(rc);
     }
 
@@ -185,15 +344,38 @@ public class ReportRowX {
         this.cells.add(rc);
     }
 
+    public void addFormulaNumberColor(String formula, boolean currencyFormat) {
+        ReportCellX rc = new ReportCellX(formula, -1);
+        if (currencyFormat) {
+            rc.setCellStyleName(ReportDefinitionX.CURRENCY_STYLE_COLOR);
+        } else {
+            rc.setCellStyleName(ReportDefinitionX.NUMBER_STYLE_COLOR);
+        }
+        this.cells.add(rc);
+    }
+
     public void addFormulaString(String formula) {
         ReportCellX rc = new ReportCellX(formula, -1);
         rc.setCellStyleName(ReportDefinitionX.STRING_STYLE);
         this.cells.add(rc);
     }
 
+    public void addFormulaStringColor(String formula) {
+        ReportCellX rc = new ReportCellX(formula, -1);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
+        this.cells.add(rc);
+    }
+
     public void addFormulaString(String formula, int vAlign) {
         ReportCellX rc = new ReportCellX(formula, -1);
         rc.setCellStyleName(ReportDefinitionX.STRING_STYLE);
+        rc.setVAlign(vAlign);
+        this.cells.add(rc);
+    }
+
+    public void addFormulaStringColor(String formula, int vAlign) {
+        ReportCellX rc = new ReportCellX(formula, -1);
+        rc.setCellStyleName(ReportDefinitionX.STRING_STYLE_COLOR);
         rc.setVAlign(vAlign);
         this.cells.add(rc);
     }

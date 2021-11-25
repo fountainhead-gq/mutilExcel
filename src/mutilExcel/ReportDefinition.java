@@ -65,6 +65,28 @@ public class ReportDefinition {
 
     private CellStyle wrapStyle;
 
+    private int cellColor;
+
+    private CellStyle headerStyleColor;
+
+    private CellStyle propertyStyleColor;
+
+    private CellStyle cellStyleColor;
+
+    private CellStyle stringCellStyleColor;
+
+    private CellStyle longStringCellStyleColor;
+
+    private CellStyle numberCellStyleColor;
+
+    private CellStyle dateCellStyleColor;
+
+    private CellStyle currencyStyleColor;
+
+    private CellStyle percentageStyleColor;
+
+    private CellStyle wrapStyleColor;
+
     public static String HEADER_STYLE = "headerStyle";
 
     public static String CELL_STYLE = "cellStyle";
@@ -82,6 +104,24 @@ public class ReportDefinition {
     public static String CURRENCY_STYLE = "currencyStyle";
 
     public static String PERCENTAGE_STYLE = "percentageStyle";
+
+    public static String HEADER_STYLE_COLOR = "headerStyleColor";
+
+    public static String CELL_STYLE_COLOR = "cellStyleColor";
+
+    public static String STRING_STYLE_COLOR = "stringStyleColor";
+
+    public static String LONG_STRING_STYLE_COLOR = "longStringStyleColor";
+
+    public static String NUMBER_STYLE_COLOR = "numberStyleColor";
+
+    public static String DATE_STYLE_COLOR = "dateStyleColor";
+
+    public static String PROPERTY_STYLE_COLOR = "propertyStyleColor";
+
+    public static String CURRENCY_STYLE_COLOR = "currencyStyleColor";
+
+    public static String PERCENTAGE_STYLE_COLOR = "percentageStyleColor";
 
     private HashMap<String, CellStyle> styles = new HashMap<>();
 
@@ -198,6 +238,11 @@ public class ReportDefinition {
     }
 
     private void prepareStyles() {
+        Font headerFont = this.workbook.createFont();
+        headerFont.setBoldweight((short)700);
+        headerFont.setFontHeightInPoints((short)10);
+        headerFont.setFontName("Aria");
+
         this.headerStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.headerStyle.setBorderLeft((short)1);
@@ -207,17 +252,32 @@ public class ReportDefinition {
         }
         this.headerStyle.setFillBackgroundColor((short)49);
         this.headerStyle.setFillForegroundColor((short)12);
-        Font headerFont = this.workbook.createFont();
-        headerFont.setBoldweight((short)700);
-        headerFont.setFontHeightInPoints((short)10);
-        headerFont.setFontName("Aria");
-        this.headerStyle.setFont(headerFont);
         this.headerStyle.setVerticalAlignment((short)1);
         this.headerStyle.setAlignment((short)2);
+        this.headerStyle.setFont(headerFont);
         this.headerStyle.setWrapText(true);
+
+        this.headerStyleColor = this.workbook.createCellStyle();
+        this.headerStyleColor.setFillPattern((short)1);
+        this.headerStyleColor.setFillForegroundColor((short)this.cellColor);
+        this.headerStyleColor.setFillBackgroundColor((short)10);
+        if (!this.printable) {
+            this.headerStyleColor.setBorderLeft((short)1);
+            this.headerStyleColor.setBorderRight((short)1);
+            this.headerStyleColor.setBorderTop((short)1);
+            this.headerStyleColor.setBorderBottom((short)1);
+        }
+
+        this.headerStyleColor.setVerticalAlignment((short)1);
+        this.headerStyleColor.setAlignment((short)2);
+        this.headerStyleColor.setFont(headerFont);
+        this.headerStyleColor.setWrapText(true);
+
+
         Font dataFont = this.workbook.createFont();
         dataFont.setFontHeightInPoints((short)10);
         dataFont.setFontName("Aria");
+
         this.cellStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.cellStyle.setBorderLeft((short)1);
@@ -228,6 +288,20 @@ public class ReportDefinition {
         this.cellStyle.setVerticalAlignment((short)1);
         this.cellStyle.setAlignment((short)2);
         this.cellStyle.setFont(dataFont);
+
+        this.cellStyleColor = this.workbook.createCellStyle();
+        this.cellStyleColor.setFillPattern((short)1);
+        this.cellStyleColor.setFillForegroundColor((short)this.cellColor);
+        if (!this.printable) {
+            this.cellStyleColor.setBorderLeft((short)1);
+            this.cellStyleColor.setBorderRight((short)1);
+            this.cellStyleColor.setBorderTop((short)1);
+            this.cellStyleColor.setBorderBottom((short)1);
+        }
+        this.cellStyleColor.setVerticalAlignment((short)1);
+        this.cellStyleColor.setAlignment((short)2);
+        this.cellStyleColor.setFont(dataFont);
+
         this.propertyStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.propertyStyle.setBorderLeft((short)1);
@@ -238,6 +312,18 @@ public class ReportDefinition {
         this.propertyStyle.setFont(headerFont);
         this.propertyStyle.setVerticalAlignment((short)1);
         this.propertyStyle.setAlignment((short)1);
+        this.propertyStyleColor = this.workbook.createCellStyle();
+        this.propertyStyleColor.setFillPattern((short)1);
+        this.propertyStyleColor.setFillForegroundColor((short)this.cellColor);
+        if (!this.printable) {
+            this.propertyStyleColor.setBorderLeft((short)1);
+            this.propertyStyleColor.setBorderRight((short)1);
+            this.propertyStyleColor.setBorderTop((short)1);
+            this.propertyStyleColor.setBorderBottom((short)1);
+        }
+        this.propertyStyleColor.setFont(headerFont);
+        this.propertyStyleColor.setVerticalAlignment((short)1);
+        this.propertyStyleColor.setAlignment((short)1);
         this.stringCellStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.stringCellStyle.setBorderLeft((short)1);
@@ -248,6 +334,19 @@ public class ReportDefinition {
         this.stringCellStyle.setVerticalAlignment((short)1);
         this.stringCellStyle.setAlignment((short)1);
         this.stringCellStyle.setFont(dataFont);
+        this.stringCellStyleColor = this.workbook.createCellStyle();
+        this.stringCellStyleColor.setFillPattern((short)1);
+        this.stringCellStyleColor.setFillForegroundColor((short)this.cellColor);
+        if (!this.printable) {
+            this.stringCellStyleColor.setBorderLeft((short)1);
+            this.stringCellStyleColor.setBorderRight((short)1);
+            this.stringCellStyleColor.setBorderTop((short)1);
+            this.stringCellStyleColor.setBorderBottom((short)1);
+        }
+        this.stringCellStyleColor.setVerticalAlignment((short)1);
+        this.stringCellStyleColor.setAlignment((short)1);
+        this.stringCellStyleColor.setFont(dataFont);
+
         this.longStringCellStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.longStringCellStyle.setBorderLeft((short)1);
@@ -259,6 +358,20 @@ public class ReportDefinition {
         this.longStringCellStyle.setAlignment((short)1);
         this.longStringCellStyle.setWrapText(true);
         this.longStringCellStyle.setFont(dataFont);
+        this.longStringCellStyleColor = this.workbook.createCellStyle();
+        this.longStringCellStyleColor.setFillPattern((short)1);
+        this.longStringCellStyleColor.setFillForegroundColor((short)this.cellColor);
+        if (!this.printable) {
+            this.longStringCellStyleColor.setBorderLeft((short)1);
+            this.longStringCellStyleColor.setBorderRight((short)1);
+            this.longStringCellStyleColor.setBorderTop((short)1);
+            this.longStringCellStyleColor.setBorderBottom((short)1);
+        }
+        this.longStringCellStyleColor.setVerticalAlignment((short)1);
+        this.longStringCellStyleColor.setAlignment((short)1);
+        this.longStringCellStyleColor.setWrapText(true);
+        this.longStringCellStyleColor.setFont(dataFont);
+
         this.numberCellStyle = this.workbook.createCellStyle();
         if (!this.printable) {
             this.numberCellStyle.setBorderLeft((short)1);
@@ -269,6 +382,19 @@ public class ReportDefinition {
         this.numberCellStyle.setVerticalAlignment((short)1);
         this.numberCellStyle.setAlignment((short)3);
         this.numberCellStyle.setFont(dataFont);
+        this.numberCellStyleColor = this.workbook.createCellStyle();
+        this.numberCellStyleColor.setFillPattern((short)1);
+        this.numberCellStyleColor.setFillForegroundColor((short)this.cellColor);
+        if (!this.printable) {
+            this.numberCellStyleColor.setBorderLeft((short)1);
+            this.numberCellStyleColor.setBorderRight((short)1);
+            this.numberCellStyleColor.setBorderTop((short)1);
+            this.numberCellStyleColor.setBorderBottom((short)1);
+        }
+        this.numberCellStyleColor.setVerticalAlignment((short)1);
+        this.numberCellStyleColor.setAlignment((short)3);
+        this.numberCellStyleColor.setFont(dataFont);
+
         DataFormat format = this.workbook.createDataFormat();
         this.dateCellStyle = this.workbook.createCellStyle();
         this.dateCellStyle.setDataFormat(format.getFormat("yyyy-MM-dd"));
@@ -281,6 +407,20 @@ public class ReportDefinition {
         this.dateCellStyle.setVerticalAlignment((short)1);
         this.dateCellStyle.setAlignment((short)3);
         this.dateCellStyle.setFont(dataFont);
+        this.dateCellStyleColor = this.workbook.createCellStyle();
+        this.dateCellStyleColor.setFillPattern((short)1);
+        this.dateCellStyleColor.setFillForegroundColor((short)this.cellColor);
+        this.dateCellStyleColor.setDataFormat(format.getFormat("yyyy-MM-dd"));
+        if (!this.printable) {
+            this.dateCellStyleColor.setBorderLeft((short)1);
+            this.dateCellStyleColor.setBorderRight((short)1);
+            this.dateCellStyleColor.setBorderTop((short)1);
+            this.dateCellStyleColor.setBorderBottom((short)1);
+        }
+        this.dateCellStyleColor.setVerticalAlignment((short)1);
+        this.dateCellStyleColor.setAlignment((short)3);
+        this.dateCellStyleColor.setFont(dataFont);
+
         this.currencyStyle = this.workbook.createCellStyle();
         DataFormat currencyformat = this.workbook.createDataFormat();
         this.currencyStyle.setDataFormat(currencyformat.getFormat("#,##0.00"));
@@ -293,9 +433,29 @@ public class ReportDefinition {
         this.currencyStyle.setVerticalAlignment((short)1);
         this.currencyStyle.setAlignment((short)3);
         this.currencyStyle.setFont(dataFont);
+        this.currencyStyleColor = this.workbook.createCellStyle();
+        this.currencyStyleColor.setFillPattern((short)1);
+        this.currencyStyleColor.setFillForegroundColor((short)this.cellColor);
+        this.currencyStyleColor.setDataFormat(currencyformat.getFormat("#,##0.00"));
+        if (!this.printable) {
+            this.currencyStyleColor.setBorderLeft((short)1);
+            this.currencyStyleColor.setBorderRight((short)1);
+            this.currencyStyleColor.setBorderTop((short)1);
+            this.currencyStyleColor.setBorderBottom((short)1);
+        }
+        this.currencyStyleColor.setVerticalAlignment((short)1);
+        this.currencyStyleColor.setAlignment((short)3);
+        this.currencyStyleColor.setFont(dataFont);
+
         this.wrapStyle = this.workbook.createCellStyle();
         this.wrapStyle.setWrapText(true);
         this.wrapStyle.setFont(dataFont);
+        this.wrapStyleColor = this.workbook.createCellStyle();
+        this.wrapStyleColor.setFillPattern((short)1);
+        this.wrapStyleColor.setFillForegroundColor((short)this.cellColor);
+        this.wrapStyleColor.setWrapText(true);
+        this.wrapStyleColor.setFont(dataFont);
+
         this.percentageStyle = this.workbook.createCellStyle();
         DataFormat percentageFormat = this.workbook.createDataFormat();
         this.percentageStyle.setDataFormat(percentageFormat.getFormat("0.00%"));
@@ -308,15 +468,38 @@ public class ReportDefinition {
         this.percentageStyle.setVerticalAlignment((short)1);
         this.percentageStyle.setAlignment((short)3);
         this.percentageStyle.setFont(dataFont);
+        this.percentageStyleColor = this.workbook.createCellStyle();
+        this.percentageStyleColor.setFillPattern((short)1);
+        this.percentageStyleColor.setFillForegroundColor((short)this.cellColor);
+        this.percentageStyleColor.setDataFormat(percentageFormat.getFormat("0.00%"));
+        if (!this.printable) {
+            this.percentageStyleColor.setBorderLeft((short)1);
+            this.percentageStyleColor.setBorderRight((short)1);
+            this.percentageStyleColor.setBorderTop((short)1);
+            this.percentageStyleColor.setBorderBottom((short)1);
+        }
+        this.percentageStyleColor.setVerticalAlignment((short)1);
+        this.percentageStyleColor.setAlignment((short)3);
+        this.percentageStyleColor.setFont(dataFont);
+
         this.styles.put(HEADER_STYLE, this.headerStyle);
+        this.styles.put(HEADER_STYLE_COLOR, this.headerStyleColor);
         this.styles.put(PROPERTY_STYLE, this.propertyStyle);
+        this.styles.put(PROPERTY_STYLE_COLOR, this.propertyStyleColor);
         this.styles.put(STRING_STYLE, this.stringCellStyle);
+        this.styles.put(STRING_STYLE_COLOR, this.stringCellStyleColor);
         this.styles.put(LONG_STRING_STYLE, this.longStringCellStyle);
+        this.styles.put(LONG_STRING_STYLE_COLOR, this.longStringCellStyleColor);
         this.styles.put(CELL_STYLE, this.cellStyle);
+        this.styles.put(CELL_STYLE_COLOR, this.cellStyleColor);
         this.styles.put(NUMBER_STYLE, this.numberCellStyle);
+        this.styles.put(NUMBER_STYLE_COLOR, this.numberCellStyleColor);
         this.styles.put(DATE_STYLE, this.dateCellStyle);
+        this.styles.put(DATE_STYLE_COLOR, this.dateCellStyleColor);
         this.styles.put(CURRENCY_STYLE, this.currencyStyle);
+        this.styles.put(CURRENCY_STYLE_COLOR, this.currencyStyleColor);
         this.styles.put(PERCENTAGE_STYLE, this.percentageStyle);
+        this.styles.put(PERCENTAGE_STYLE_COLOR, this.percentageStyleColor);
     }
 
     public void addRow(ReportRow row) {
@@ -479,7 +662,7 @@ public class ReportDefinition {
                 Row row = this.sheet.createRow(rowNumber++);
                 for (int i = 0; i < ((ReportRow)this.headers.get(h)).size(); i++) {
                     Cell cellHeader = row.createCell(i);
-                    cellHeader.setCellStyle(this.headerStyle);
+                    cellHeader.setCellStyle(this.styles.get(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellStyleName()));
                     cellHeader.setCellType(1);
                     cellHeader.setCellValue(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellContent());
                     this.titleEndColIndex = i;
@@ -571,7 +754,7 @@ public class ReportDefinition {
                 Row row = this.sheet.createRow(rowNumber++);
                 for (int i = 0; i < ((ReportRow)this.headers.get(h)).size(); i++) {
                     Cell cellHeader = row.createCell(i);
-                    cellHeader.setCellStyle(this.headerStyle);
+                    cellHeader.setCellStyle(this.styles.get(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellStyleName()));
                     cellHeader.setCellType(1);
                     cellHeader.setCellValue(((ReportCell)((ReportRow)this.headers.get(h)).getCells().get(i)).getCellContent());
                     this.titleEndColIndex = i;
@@ -641,10 +824,14 @@ public class ReportDefinition {
             if (!this.prepared)
                 prepareExcel();
             if (this.sheet != null)
+
                 for (int i = 0; i < ((ReportRow)this.headers.get(0)).size(); i++) {
                     this.sheet.autoSizeColumn(i, true);
                     int columnWidth = this.sheet.getColumnWidth(i);
-                    System.out.println("" + i + "->" + columnWidth);
+                    int headerColumnWidth = (this.headers.get(0).getCells().get(i)).getCellContent().length()*2*256;
+                    this.sheet.setColumnWidth(i,headerColumnWidth);
+//                    this.sheet.setColumnWidth(i,columnWidth);
+//                    System.out.println("col:" + i + "->" + columnWidth +"--" +(this.headers.get(0).getCells().get(i)).getCellContent().length()*2*256);
                     if (columnWidth <= this.minColumnWidth) {
                         this.sheet.setColumnWidth(i, this.defaultColumnWidth);
                         System.out.println(i + " set ->" + this.sheet.getColumnWidth(i));
@@ -831,6 +1018,10 @@ public class ReportDefinition {
     public void setHeaderRowIndex(int headerRowIndex) {
         this.headerRowIndex = headerRowIndex;
     }
+
+    public int getCellColor() { return this.cellColor;}
+
+    public void setCellColor(int cellColor) { this.cellColor = cellColor;}
 
     public void setColumnWidth(int columnIndex, int width) {
         try {
